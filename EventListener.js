@@ -143,3 +143,15 @@ this.Element && Element.prototype.attachEvent && !Element.prototype.addEventList
 		return event;
 	};
 })();
+
+// polyfill for IE9-10 taken from https://gist.github.com/james2doyle/7945320
+(function () {
+  function CustomEvent (event, params) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    return evt;
+   };
+  CustomEvent.prototype = window.CustomEvent.prototype;
+  window.CustomEvent = CustomEvent;
+})();
